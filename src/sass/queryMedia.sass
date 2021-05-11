@@ -1,0 +1,20 @@
+$pc-media: 960px
+$pad-media: 768px
+$phone-media: 576px
+
+$pc-title-height: 152px
+$pad-title-height: 152px
+$phone-title-height: 50px
+
+//電腦
+@mixin pc-width() 
+    @media all and (min-width: $pc-media)
+        @content
+//平板
+@mixin pad-width()
+    @media all and (min-width: $pad-media) and (max-width: $pc-media)
+        @content
+//手機
+@mixin phone-width()
+    @media all and (max-width: $pad-media)
+        @content

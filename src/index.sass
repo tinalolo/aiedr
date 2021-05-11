@@ -1,0 +1,39 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css)
+@import './sass/normalize.sass'
+@import '~antd/dist/antd.css'
+// @import '~antd-mobile/dist/antd-mobile.css'
+@import './sass/theme.sass'
+@import './sass/app.sass'
+
+
+$primaryLight: #A9B3BF // 亮色
+$primaryShallow: #354252 // 淺色
+
+*
+    box-sizing: border-box
+    outline: none
+
+.body
+    font-family: 'Noto Sans TC', sans-serif
+    letter-spacing: .5px
+    overflow-x: hidden
+
+.tiny_fontSize
+    font-size: $tiny_fontSize
+
+/* scroll bar style */
+::-webkit-scrollbar
+	width: 6px
+	height: 6px
+	background-color: $primaryLight
+::-webkit-scrollbar-track
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3)
+	background-color: $primaryLight
+::-webkit-scrollbar-thumb
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3)
+	background-color: $primaryShallow
+	background-clip: padding-box
+
+svg
+	vertical-align: baseline
+

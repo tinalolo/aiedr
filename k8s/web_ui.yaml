@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aiedr-web-ui
+  namespace: aiedr
+spec:
+  selector:
+   matchLabels:
+    app: aiedr-web-ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: aiedr-web-ui
+        version: v1.06.002
+    spec:
+      containers:
+      - name: aiedr-web-ui
+        image: ec2-35-170-140-166.compute-1.amazonaws.com:5000/aiedr_web_ui:v1.06.002
+        resources:
+          requests : 
+            memory: "128Mi"
+            cpu: "50m"
+          limits:
+            memory: "1Gi"
+            cpu: "150m"
+        ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aiedr-web-ui-service
+  namespace: aiedr
+  labels:
+    app: aiedr-web-ui
+spec:
+  ports:
+  - name: web-api-ui-port
+    port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: aiedr-web-ui

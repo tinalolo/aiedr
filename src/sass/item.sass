@@ -1,0 +1,10 @@
+@import ./queryMedia.sass
+
+.item-vertical-layout
+    // grid-column-start:  1
+    @include pc-width
+        grid-column: 1 / span 3
+    @include pad-width
+        grid-column-end: span 2
+    @include phone-width
+        grid-column-end: span 2
