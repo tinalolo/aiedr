@@ -4,8 +4,6 @@ import styled from 'styled-components';
 import { StyledSwitch } from 'src/atoms/StyledSwitch';
 import { StyledText } from 'src/atoms/StyledText';
 
-
-import { CameraItem } from 'src/interface/api/response/getCameras';//新增
 import EventPanel from 'src/component/event/EventPanel';
 import CameraPanel from 'src/component/camera/CameraPanel';
 import { EventProvider } from 'src/contexts/eventsContext';
@@ -13,13 +11,7 @@ import { CameraProvider } from 'src/contexts/cameraContext';
 import { VideoProvider } from 'src/contexts/videoContext';
 import { StyledHeader } from 'src/atoms/StyledHeader';
 import VideoPanel from 'src/component/video/VideoPanel';
-import LiveStreamingPanel from 'src/component/liveStreaming2/LiveStreamingPanel';
-//改成liveStreaming2
-
-
-
-
-
+import LiveStreamingPanel from 'src/component/liveStreaming/LiveStreamingPanel';
 
 
 const Body = styled.div`
@@ -76,19 +68,9 @@ const HeaderTitle = styled.div`
 `;
 
 
-interface Props {//新增測試
-    checkOne: any;
-    // handleCameraSelect_true: Function;
-    // handleCameraSelect_false: Function;
-}
-
 const DashBoard = () => {
 
-
-
     const [isEventPanel, setIsEventPanel] = useState(false);
-    const [checkOne, setCheckOne] = useState(0);//溝一個在家一個
-
 
     return (
         <>
@@ -111,7 +93,6 @@ const DashBoard = () => {
                         }
 
                     </VideoContainer>
-
                     {/* //右邊塊 */}
                     <SearchList>
                         {!isEventPanel
@@ -119,11 +100,7 @@ const DashBoard = () => {
                                 <EventPanel />
                             </EventProvider>
                             : <CameraProvider>
-                                <CameraPanel
-                                    checkOne={checkOne}
-                                    handleCameraSelect_true={() => { setCheckOne(checkOne + 1) }}
-                                    handleCameraSelect_false={() => { setCheckOne(checkOne - 1) }}
-                                />
+                                <CameraPanel />
                             </CameraProvider>
                         }
                     </SearchList>

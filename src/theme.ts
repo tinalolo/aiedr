@@ -13,6 +13,6 @@ const theme: { [key: string]: string } = {
     'cyan-3': '#0DA5AB',
 
     white: '#FFFFFF',
-    tip: '#B9B9B9',
+    tip: '#B9B9B9'
 };
 export default theme;

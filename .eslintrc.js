@@ -23,7 +23,7 @@ module.exports = {
         'indent': ['error', 4, { SwitchCase: 1 }],
         'quotes': ['error', 'single'],
         'semi': ['error', 'always'],
-        'semi-spacing': ['error', { 'before': false, 'after': false }],
+        'semi-spacing': ['error'],
         'comma-dangle': ['error', 'never'],
         'comma-spacing': 'error',
         'key-spacing': 'error',

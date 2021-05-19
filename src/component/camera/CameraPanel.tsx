@@ -118,7 +118,7 @@ const IconButton = styled(Button)`
     &.ant-btn-icon-only > * {
         font-size: 12px;
     }
-`;
+`; 
 
 const TotalTag = styled.span`
     font-size: 12px;
@@ -128,18 +128,11 @@ const TotalTag = styled.span`
     right: 24px;
 `;
 
-interface Props {//新增測試
-    checkOne: any;
-    // sendAndTry: string;
-    // cameraItem: any;
-    handleCameraSelect_true: Function;
-    handleCameraSelect_false: Function;
-}
 
-const CameraPanel = (props: Props) => {
+const CameraPanel = () => {
+
     const { apiCaller } = useAxios();
-
-    // const [checkOne, setCheckOne] = useState(0);//溝一個在家一個
+    
     const [searchBarOpen, setSearchBarOpen] = useState(false);
     const {
         showCameraTotalTag,
@@ -155,56 +148,55 @@ const CameraPanel = (props: Props) => {
     const { cameraList, setCameraList } = useVideoStore();
     const { cameraSearchState, setCameraSearchState, setCameraPlayItem, cameraPlayItem } = useDashboardStore();
 
-    const maxRangeIndex = Math.ceil(totalRows / 300);
+    const maxRangeIndex = Math.ceil(totalRows / 300); 
     const totalPages = Math.ceil(totalRows / 12);
 
     const getCameras = async (action: 'search' | 'init') => {
-        switch (action) {
-            case 'search':
+        switch(action) {
+            case 'search': 
                 {
                     const response = await apiCaller(getCamerasConfig(cameraSearchState) as AxiosRequestConfig);
-                    const result: GetCamerasResponse = response.responseData;
-                    if (result?.cameras) {
-                        debugger;
+                    const result : GetCamerasResponse = response.responseData;
+                    if( result?.cameras ) {
                         setShowCameraTotalTag(true);
                         setCameraList(result.cameras);
                         setTotalRows(result.totalRows);
                         setCurrentRangeIndex(result.currentRangeIndex);
-                        if (!isEmptyData(result.cameras)) {
+                        if(!isEmptyData(result.cameras)) {
                             setBaseCamera(result.cameras[0].uuid);
-                            if (isEmptyData(cameraPlayItem)) {
+                            if(isEmptyData(cameraPlayItem)) {
                                 setCameraPlayItem(result.cameras[0]);
                             }
                         }
                     }
                 }
                 break;
-
-            case 'init':
+            
+            case 'init': 
                 {
                     const response = await apiCaller(getCamerasConfig({}) as AxiosRequestConfig);
-                    const result: GetCamerasResponse = response.responseData;
-                    if (result.cameras) {
+                    const result : GetCamerasResponse = response.responseData;
+                    if( result.cameras ) {
                         setCameraSearchState({});
                         setCameraList(result.cameras);
                         setTotalRows(result.totalRows);
                         setCurrentRangeIndex(result.currentRangeIndex);
-                        if (!isEmptyData(result.cameras)) {
+                        if(!isEmptyData(result.cameras)) {
                             setBaseCamera(result.cameras[0].uuid);
                         }
                     }
                 }
                 break;
-
+            
             default: return;
         }
-
+        
     };
 
     useEffect(() => {
         getCameras('search');
     }, []);
-
+      
 
     const handleSearchTotalTagClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         getCameras('init');
@@ -213,40 +205,34 @@ const CameraPanel = (props: Props) => {
     };
 
     const getCamerasWithAction = async (action: 'first' | 'previous' | 'next' | 'last') => {
-        const response = await apiCaller(getCamerasConfig({
+        const response = await apiCaller(getCamerasConfig ({
             base: baseCamera,
             currentRangeIndex: currentRangeIndex,
             action: action
         }) as AxiosRequestConfig);
-        const result: GetCamerasResponse = response.responseData;
+        const result : GetCamerasResponse = response.responseData;
 
-        if (result.cameras) {
+        if( result.cameras ) {
             setCameraList(result.cameras);
             setTotalRows(result.totalRows);
             setCurrentRangeIndex(result.currentRangeIndex);
         }
     };
-
-    const getContainerHeight = () => {
-        debugger;
-        const getEle = document.getElementById('container');
-        console.log(getEle);
-        // getEle.style.width = '50%';
-    }
+    
 
     return (
         <Container>
             <CameraFilterBar onClick={() => setSearchBarOpen(!searchBarOpen)}>
                 <span>Search Camera</span>
-                {showCameraTotalTag &&
+                {   showCameraTotalTag && 
                     <SearchCameraTotalTag onClick={(e) => handleSearchTotalTagClick(e)}>
                         {cameraList.length}
                         <CloseOutlined style={{ fontSize: '8px' }} />
                     </SearchCameraTotalTag>
                 }
             </CameraFilterBar>
-
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
+            
+            <div style={{position: 'relative', overflow: 'hidden'}}>
                 <CameraListContainer>
                     <CameraList
                         dataSource={cameraList}
@@ -254,47 +240,35 @@ const CameraPanel = (props: Props) => {
                             pageSize: 12,
                             simple: true
                         }}
-                        // 這邊可以用setCheckOne的方式傳進去 handleCameraSelect 
-                        renderItem={(item) => (//item自己放的變數
-                            <CameraCard
-                                cameraItem={item as CameraItem}
-                            // handleCameraSelect_true={() => { setCheckOne(checkOne + 1) }}
-                            // handleCameraSelect_false={() => { setCheckOne(checkOne - 1) }}
-                            // checkOne={checkOne}
-                            ></CameraCard>)
-                        }
+                        renderItem={(item) => (<CameraCard cameraItem={item as CameraItem} handleCameraSelect={() => {}}></CameraCard>)}
                     />
-                    {/* {(checkOne === 2) ? getContainerHeight() : 'xx'} */}
-                    {/* {console.log(checkOne)} */}
-                    { }
-                    {/* IconButton是切換頁面的 */}
-                    <IconButton
+                    <IconButton 
                         disabled={currentRangeIndex === maxRangeIndex}
                         onClick={() => getCamerasWithAction('next')}
-                        style={{ position: 'absolute', bottom: '24px', right: 'calc(45px + 35px + 32px)' }}
-                        type="link"
-                        icon={<DoubleRightOutlined style={{ color: 'white' }} />}
+                        style={{ position: 'absolute', bottom: '24px', right: 'calc(45px + 35px + 32px)' }} 
+                        type="link" 
+                        icon={<DoubleRightOutlined style={{ color: 'white' }} />} 
                     />
-                    <IconButton
+                    <IconButton 
                         disabled={currentRangeIndex === maxRangeIndex}
                         onClick={() => getCamerasWithAction('last')}
-                        style={{ position: 'absolute', bottom: '24px', right: 'calc(45px + 35px)' }}
-                        type="link"
-                        icon={<VerticalLeftOutlined style={{ color: 'white' }} />}
+                        style={{ position: 'absolute', bottom: '24px', right: 'calc(45px + 35px)' }} 
+                        type="link" 
+                        icon={<VerticalLeftOutlined style={{ color: 'white' }} />} 
                     />
-                    <IconButton
+                    <IconButton 
                         disabled={currentRangeIndex === 1}
                         onClick={() => getCamerasWithAction('previous')}
-                        style={{ position: 'absolute', bottom: '24px', left: '60px' }}
-                        type="link"
-                        icon={<DoubleLeftOutlined style={{ color: 'white' }} />}
+                        style={{ position: 'absolute', bottom: '24px', left: '60px' }} 
+                        type="link" 
+                        icon={<DoubleLeftOutlined style={{ color: 'white' }} />} 
                     />
-                    <IconButton
+                    <IconButton 
                         disabled={currentRangeIndex === 1}
                         onClick={() => getCamerasWithAction('first')}
-                        style={{ position: 'absolute', bottom: '24px', left: '28px' }}
-                        type="link"
-                        icon={<VerticalRightOutlined style={{ color: 'white' }} />}
+                        style={{ position: 'absolute', bottom: '24px', left: '28px' }} 
+                        type="link" 
+                        icon={<VerticalRightOutlined style={{ color: 'white' }} />} 
                     />
                     <TotalTag>
                         {`${totalPages} pages`}
@@ -307,14 +281,14 @@ const CameraPanel = (props: Props) => {
                     onClose={() => setSearchBarOpen(false)}
                     visible={searchBarOpen}
                     getContainer={false}
-                    style={{ position: 'absolute' }}
+                    style={{ position: 'absolute'}}
                     drawerStyle={{ background: '#293140' }}
                 >
                     <SearchCameraPanel />
                 </Drawer>
             </div>
-        </Container >
-
+        </Container>
+        
     );
 };
 

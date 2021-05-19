@@ -1,4 +1,3 @@
-import { useState } from 'react'; 
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { JWT, baseSocketUrl } from 'src/api';
 
@@ -30,18 +29,18 @@ const useSocket = () => {
         });
         ws.addEventListener('error', error => {
             console.log(`socket error: ${error}`);
-        })
+        });
 
         return response;
-    }
-
-        return ({
-            webSocketCaller
-            // error
-        });
     };
 
-    export default useSocket;
+    return ({
+        webSocketCaller
+        // error
+    });
+};
+
+export default useSocket;
 
    
 

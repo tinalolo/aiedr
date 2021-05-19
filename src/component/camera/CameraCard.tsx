@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import { AxiosRequestConfig } from 'axios';
 import { StyledCheckbox } from 'src/atoms/StyledCheckbox';
@@ -9,7 +9,11 @@ import { useDashboardStore } from 'src/contexts/dashboardContext';
 import { dashboardIcon } from 'src/assets/index';
 import { CameraItem } from 'src/interface/api/response/getCameras';
 import { enableStreaming } from 'src/api/index';
-import { configConsumerProps } from 'antd/lib/config-provider';
+
+interface Props {
+    cameraItem: CameraItem;
+    handleCameraSelect: Function;
+}
 
 export enum CameraStatus {
     offline = 0,
@@ -57,13 +61,13 @@ const CheckBoxContainer = styled.div`
 
 const CheckBoxOnline = styled(StyledCheckbox)`
     .ant-checkbox-inner {
-        // border-radius: 50%;
+        border-radius: 50%;
     }  
 `;
 
 const CheckBoxOffline = styled(StyledCheckbox)`
     .ant-checkbox-inner {
-        // border-radius: 50%;
+        border-radius: 50%;
         background: #5C698D;
         border: 1px solid #747D95;
     }  
@@ -184,60 +188,40 @@ const CameraStatusSight: any = styled.div`
         }
     }} */
 
-const CheckBox = styled(StyledCheckbox)`
-`;
 
-interface Props {
-    cameraItem: CameraItem;
-    // checkOne: any;
-    // handleCameraSelect_true: Function;
-    // handleCameraSelect_false: Function;
-}
+
+
 
 
 const CameraCard = (props: Props) => {
     const { cameraItem } = props;
     const { apiCaller } = useAxios();
 
-    // const [checkOne, setCheckOne] = useState(0);//溝一個在家一個
-    const { setIsMotionEditMode, setMotionList, setSelectedCameraSnapshot, snapshots, setCheckOne, checkOne } = useVideoStore();
+    const { setIsMotionEditMode, setMotionList, setSelectedCameraSnapshot, snapshots } = useVideoStore();
     const { cameraPlayItem, setCameraPlayItem } = useDashboardStore();
 
     const isSelected = cameraItem.uuid === cameraPlayItem?.uuid;
     const motionCount = cameraItem.motions.length;
 
-    const handleCameraClicked = async (items:any) => {
+    const handleCameraClicked = async () => {
         const { uuid, deviceSerialNumber } = cameraItem;
-        // cameraItem
-        debugger;
-        // setCameraPlayItem(
-        //     {
-        //         motions: 'MotionItem[]',
-        //         uuid: '123',
-        //         name: 'string',
-        //         location: 'string',
-        //         deviceState: 0 | 1 | 2,
-        //         deviceSerialNumber: 'string',
-        //         editRangeCount: 2,
-        //         configTag: 'string'
-        //     }
-        // )
-        setCameraPlayItem(cameraItem);//影響顯示的資料
+        setCameraPlayItem(cameraItem);
+
         console.log('snapshots', snapshots);
 
-        if (snapshots.get(uuid)) {//成功抓到進來
+        if (snapshots.get(uuid)) {
             setSelectedCameraSnapshot(snapshots.get(uuid));
             apiCaller(enableStreaming({ serialNumber: deviceSerialNumber, cameraUuid: uuid }) as AxiosRequestConfig, false);
             // apiCaller(enableStreaming({ serialNumber: 'unit-test-sameple1', cameraUuid: '569d5af0-5614-11eb-ae93-0242ac130001' }) as AxiosRequestConfig, false);
         } else {
             setSelectedCameraSnapshot(undefined);
-            // (config = {} as AxiosRequestConfig, hasSpin: boolean = true)
             const result = await apiCaller(enableStreaming({ serialNumber: deviceSerialNumber, cameraUuid: uuid }) as AxiosRequestConfig, false);
             // const result = await apiCaller(enableStreaming({ serialNumber: 'unit-test-sameple1', cameraUuid: '569d5af0-5614-11eb-ae93-0242ac130001' }) as AxiosRequestConfig, false);
-            const { snapshot } = result.responseData;//從useAxios來的
+            const { snapshot } = result.responseData;
             if (!snapshots.get(uuid) && snapshot !== undefined) {
                 snapshots.set(uuid, snapshot);
                 setSelectedCameraSnapshot(snapshot);
+                
                 // let testSnapshot = '...';
                 // snapshots.set(uuid, testSnapshot);
                 // setSelectedCameraSnapshot(testSnapshot);
@@ -245,17 +229,6 @@ const CameraCard = (props: Props) => {
             }
         }
     };
-
-    const handleCameraSelect_true = (e:any) => {
-        debugger;
-        setCheckOne(checkOne + 1)
-        handleCameraClicked(e.target)
-    }
-
-    const handleCameraSelect_false = (e:any) => {
-        setCheckOne(checkOne - 1)
-        handleCameraClicked(e.target)
-    }
 
     const handleMotionEdit = () => {
         setIsMotionEditMode(true);
@@ -271,36 +244,19 @@ const CameraCard = (props: Props) => {
     //console.log('motionList', motionList);
 
 
-
+    
 
     return (
-        <Container isShowVideo={isSelected}>{/*// 原本有 onClick={handleCameraClicked}*/}
-            {/* <CheckBoxContainer>
-                <CheckBox defaultChecked value={ROI} onChange={(e) => setROI(e.target.checked)}>ROI</CheckBox>
-                <CheckBox defaultChecked value={lineCrossing} onChange={(e) => setLineCrossing(e.target.checked)}>Line Crossing</CheckBox>
-            </CheckBoxContainer> */}
+        <Container isShowVideo={isSelected} onClick={handleCameraClicked}>
             <CheckBoxContainer>
-                {/* //cameraItem.deviceState=0.1.2 */}
-                {/* {cameraItem.deviceState === CameraStatus.online ?
-                    <CheckBoxOnline checked={isSelected} /> :
-                    <CheckBoxOffline checked={isSelected} />
-                } */}
-                {/* {console.log(cameraItem.deviceState)}//0
-                {console.log(CameraStatus.online)}//1 */}
-                <CheckBox value={cameraItem.uuid}
-                    onChange={(e) => {//從cameraPanel傳進來的handleCameraSelect
-                        e.target.checked ? handleCameraSelect_true(e) : handleCameraSelect_false(e)
-                    }}>
-                </CheckBox>
+                {cameraItem.deviceState === CameraStatus.online ? <CheckBoxOnline checked={isSelected}/> : <CheckBoxOffline checked={isSelected}/>}
             </CheckBoxContainer>
             <InfoContainer>
                 <Text>{cameraItem.name}</Text>
                 <Text>{cameraItem.location}</Text>
             </InfoContainer>
-            {/* //亮燈狀態 */}
             <CameraStatusSight status={cameraItem.deviceState} />
-            {/* 顯示右邊的數字 */}
-            {
+            { 
                 <EditArea isShowVideo={isSelected} onClick={handleMotionEdit}>
                     <EditCameraButtonIcon src={motionCount ? cameraCardEditZone : cameraCardEditZoneDefault}></EditCameraButtonIcon>
                     <MotionCount>{motionCount}</MotionCount>

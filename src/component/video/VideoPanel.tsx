@@ -17,7 +17,6 @@ const VideoContainer = styled.div`
 const VideoPanel = () => {
 
     const { eventPlayList } = useDashboardStore();
-
     return (
         <VideoContainer>
             {

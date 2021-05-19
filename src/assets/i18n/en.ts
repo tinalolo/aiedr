@@ -1,3 +1,3 @@
 export const enLang = {
-    'hello': 'Hello there',
+    'hello': 'Hello there'
 };

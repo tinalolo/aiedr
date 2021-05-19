@@ -5,12 +5,12 @@ const useModal = () => {
 
     const openModal = () => {
         setVisible(true);
-    }
+    };
 
     const closeModal = (callback: Function) => {
         setVisible(false);
-        if (callback && typeof callback === 'function') callback();
-    }
+        if (callback && typeof callback === 'function') {callback();}
+    };
 
     return {
         visible,

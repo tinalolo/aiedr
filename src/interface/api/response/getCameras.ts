@@ -13,6 +13,7 @@ export interface CameraItem {
     deviceSerialNumber: string;
     editRangeCount: number;
     configTag: string;
+    value:string;
 }
 
 export interface MotionItem {

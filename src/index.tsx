@@ -11,18 +11,18 @@ import { enLang } from './assets/i18n/en';
 
 
 const Root = () => {
-  const lang = localStorage.getItem('lang') || navigator.language;
-  const messages = lang === 'en-US' ? enLang : twLang;
-  localStorage.setItem('lang', lang);
+    const lang = localStorage.getItem('lang') || navigator.language;
+    const messages = lang === 'en-US' ? enLang : twLang;
+    localStorage.setItem('lang', lang);
   
-  return (
-    <React.StrictMode>
-      <IntlProvider locale={lang} key={lang} messages={messages} defaultLocale='tw'>
-        <App />
-      </IntlProvider>
-    </React.StrictMode>
-  )
-}
+    return (
+        <React.StrictMode>
+            <IntlProvider locale={lang} key={lang} messages={messages} defaultLocale='tw'>
+                <App />
+            </IntlProvider>
+        </React.StrictMode>
+    );
+};
 
 ReactDOM.render(<Root/>, document.getElementById('root'));
 

@@ -36,7 +36,8 @@ export const DashboardProvider = ({ children }) => {
     const [eventPlayList, setEventPlayList] = useState([]);
     const [eventSearchState, setEventSearchState] = useState(initEventSearchState);
     const [cameraSearchState, setCameraSearchState] = useState(initCameraSearchState);
-    const [cameraPlayItem, setCameraPlayItem] = useState({});
+    const [cameraPlayItem, setCameraPlayItem] = useState([]);//改用[]
+    // const [cameraPlayItem, setCameraPlayItem] = useState({});
 
     // const eventComposer = (eventList) => {
     //     setEventList(eventList.map((item) => {

@@ -138,7 +138,6 @@ const EventPanel = () => {
                     }) as AxiosRequestConfig);
 
                     const result: GetEventsResponse = response.responseData;
-
                     if (result?.events) {
                         if (!isEmptyData(result.events) && isEmptyData(selectedEventList)) { //第一次進入頁面時自動選取前四筆 event, 播放第一筆 event
                             let initSelectedEvents = [];
@@ -243,7 +242,6 @@ const EventPanel = () => {
 
 
     const handleEventSelect = (id: string, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-
         const _selectedEventList = JSON.parse(JSON.stringify(selectedEventList as EventItem[]));
         if (event) {
             event.stopPropagation();

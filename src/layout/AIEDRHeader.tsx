@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StyledLayout } from 'src/atoms/styledLayout';
 import styled from 'styled-components';
 import { Layout } from 'antd';
-import { MenuOutlined } from '@ant-design/icons';
+// import { MenuOutlined } from '@ant-design/icons';
 
 import useAxios from 'src/hooks/useAxios';
 import { AxiosRequestConfig } from 'axios';
@@ -10,12 +10,13 @@ import { userLoginConfig } from 'src/api';
 
 import { StyledButton } from 'src/atoms/StyledButton';
 import { StyledText } from 'src/atoms/StyledText';
-import { useStore } from 'src/contexts/globalContext';
+// import { useStore } from 'src/contexts/globalContext';
 import { dashboardIcon } from 'src/assets/index';
 
 const { Header } = Layout;
 const { logo, userIcon } = dashboardIcon;
 
+//TODO 改顏色?
 const StyledHeader = styled(Header)`
     display: flex;
     justify-content: space-between;
@@ -42,15 +43,15 @@ const UserButton = styled(StyledButton)`
 const UserImg = styled.img`
 `;
 
-const CollapsedButton = styled(StyledButton)`
-    padding-left: 0px;
-`;
+// const CollapsedButton = styled(StyledButton)`
+//     padding-left: 0px;
+// `;
 
 const Logo = styled.img`
 `;
 
 const AIEDRHeader = () => {
-    const { isFuncSiderCollapsed, setIsFuncSiderCollapsed } = useStore();
+    // const { isFuncSiderCollapsed, setIsFuncSiderCollapsed } = useStore();
     const { apiCaller } = useAxios();
 
     const userLogin = async () => {
@@ -82,7 +83,8 @@ const AIEDRHeader = () => {
         <StyledLayout >
             <StyledHeader>
                 <LeftHeader>
-                    <CollapsedButton
+                    {/* 漢堡先關起來 */}
+                    {/* <CollapsedButton
                         customSize="large"
                         type="link"
                         onClick={(e) => {
@@ -91,7 +93,7 @@ const AIEDRHeader = () => {
                         }}
                     >
                         <MenuOutlined />
-                    </CollapsedButton>
+                    </CollapsedButton> */}
                     <Logo src={logo} />
                 </LeftHeader>
                 <RightHeader>

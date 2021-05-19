@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
-
 import LiveStreamingPlayer from 'src/component/liveStreaming/LiveStreamingPlayer';
 import MotionControlBar from './MotionControlBar';
 
